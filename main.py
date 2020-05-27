@@ -75,6 +75,15 @@ wn.onkeypress(go_left, "a")
 while True:
     wn.update()
 
+    # Check for a collision with the border
+    def outOfBounds(num):
+        return (num < 0 or num > 290)
+
+    if outOfBounds(head.xcor()) or outOfBounds(head.ycor()):
+        time.sleep(1)
+        head.goto(0, 0)
+        head.direction = "stop"
+
     # Check for a collision with the food
     if head.distance(food) < 20:
         # Move food to random place on screen
