@@ -33,19 +33,22 @@ segments = []
 
 # Functions
 def go_up():
-    head.direction = "up"
-
+    if head.direction != "down":
+        head.direction = "up"
 
 def go_down():
-    head.direction = "down"
+    if head.direction != "up":
+        head.direction = "down"
 
 
 def go_left():
-    head.direction = "left"
+    if head.direction != "right":
+        head.direction = "left"
 
 
 def go_right():
-    head.direction = "right"
+    if head.direction != "left":
+        head.direction = "right"
 
 
 def move():
@@ -84,6 +87,13 @@ while True:
         head.goto(0, 0)
         head.direction = "stop"
 
+        # Hide segments
+        for segment in segments:
+            segment.goto(1000, 1000)
+
+        # Clear the segments list
+        segments.clear()
+
     # Check for a collision with the food
     if head.distance(food) < 20:
         # Move food to random place on screen
@@ -112,6 +122,14 @@ while True:
         segments[0].goto(x, y)
 
     move()
+
+    # Check for head collision with body
+    for segment in segments:
+        if segment.distance(head) < 20:
+            time.sleep(1)
+            head.goto(0, 0)
+            head.direction = "stop"
+
 
     time.sleep(delay)
 
