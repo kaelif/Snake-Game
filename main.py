@@ -1,6 +1,6 @@
 import turtle
 import time
-# import random
+import random
 
 delay = 0.1
 
@@ -20,6 +20,14 @@ head.penup()
 head.goto(0, 0)
 head.direction = "stop"
 
+
+# Snake food
+food = turtle.Turtle()
+food.speed(0)
+food.shape("circle")
+food.color("green")
+food.penup()
+food.goto(0, 100)
 
 # Functions
 def go_up():
@@ -64,6 +72,12 @@ wn.onkeypress(go_left, "a")
 # Main game loop
 while True:
     wn.update()
+
+    if head.distance(food) < 20:
+        # Move food to random place on screen
+        x = random.randint(-290, 290)
+        y = random.randint(-290, 290)
+        food.goto(x, y)
 
     move()
 
