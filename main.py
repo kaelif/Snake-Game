@@ -4,6 +4,10 @@ import random
 
 delay = 0.1
 
+# Score
+score = 0
+high_score = 0
+
 # Set up the screen
 wn = turtle.Screen()
 wn.title("Snake Game")
@@ -30,6 +34,15 @@ food.penup()
 food.goto(0, 100)
 
 segments = []
+
+# Pen
+pen = turtle.Turtle()
+pen.speed(0)
+pen.shape("square")
+pen.color("white")
+pen.hideturtle()
+pen.goto(0, 260)
+pen.write("Score: 0 High Score: 0", align="center", font=("Courier", 24, "normal"))
 
 # Functions
 def go_up():
