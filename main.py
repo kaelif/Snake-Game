@@ -96,7 +96,7 @@ while True:
 
     # Check for a collision with the border
     def outOfBounds(num):
-        return (num < 0 or num > 290)
+        return (abs(num) > 290)
 
 
     if outOfBounds(head.xcor()) or outOfBounds(head.ycor()):
