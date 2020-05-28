@@ -24,7 +24,6 @@ head.penup()
 head.goto(0, 0)
 head.direction = "stop"
 
-
 # Snake food
 food = turtle.Turtle()
 food.speed(0)
@@ -44,10 +43,12 @@ pen.hideturtle()
 pen.goto(0, 260)
 pen.write("Score: 0 High Score: 0", align="center", font=("Courier", 24, "normal"))
 
+
 # Functions
 def go_up():
     if head.direction != "down":
         head.direction = "up"
+
 
 def go_down():
     if head.direction != "up":
@@ -80,6 +81,7 @@ def move():
     if head.direction == "right":
         head.setx(x + 20)
 
+
 # Keyboard bindings
 wn.listen()
 wn.onkeypress(go_up, "w")
@@ -91,9 +93,11 @@ wn.onkeypress(go_left, "a")
 while True:
     wn.update()
 
+
     # Check for a collision with the border
     def outOfBounds(num):
         return (num < 0 or num > 290)
+
 
     if outOfBounds(head.xcor()) or outOfBounds(head.ycor()):
         time.sleep(1)
@@ -106,6 +110,15 @@ while True:
 
         # Clear the segments list
         segments.clear()
+
+        # Reset score
+        score = 0
+
+        # Reset the delay
+        delay = 0.1
+
+        pen.clear()
+        pen.write("Score: {} High Score: {}".format(score, high_score), align="center")
 
     # Check for a collision with the food
     if head.distance(food) < 20:
@@ -122,8 +135,17 @@ while True:
         new_segment.penup()
         segments.append(new_segment)
 
+        # Shorten the delay
+        delay -= 0.001
+
+        # Increase the score
+        score += 10
+
+        if score > high_score:
+            high_score = score
+
     # Move the end segments first in reverse order
-    for index in range(len(segments) -1, 0,  -1):
+    for index in range(len(segments) - 1, 0, -1):
         x = segments[index - 1].xcor()
         y = segments[index - 1].ycor()
         segments[index].goto(x, y)
@@ -143,6 +165,19 @@ while True:
             head.goto(0, 0)
             head.direction = "stop"
 
+            # Hide the segments
+            for segment in segments:
+                segment.goto(1000, 1000)
+
+            # Clear the segments list
+            segments.clear()
+
+            # Reset the score
+            score = 0
+
+            # Update the score display
+            pen.clear()
+            pen.write("Score: {} High Score: {}".format(score, high_score), align="center")
 
     time.sleep(delay)
 
